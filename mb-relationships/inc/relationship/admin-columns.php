@@ -105,12 +105,13 @@ class MBR_Admin_Columns {
 			return;
 		}
 
-		echo $this->get_column_data( $object_id, $this->to['object_type'], 'from' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $this->get_column_data( $object_id, $this->to['object_type'], 'from' ) );
 	}
 
 	/**
 	 * Display column data for terms and users on 'from' side.
 	 *
+	 * @param  string $content   Content of the column.
 	 * @param  string $column    Column ID.
 	 * @param  int    $object_id Object ID.
 	 */
@@ -133,12 +134,13 @@ class MBR_Admin_Columns {
 			return;
 		}
 
-		echo $this->get_column_data( $object_id, $this->from['object_type'], 'to' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $this->get_column_data( $object_id, $this->from['object_type'], 'to' ) );
 	}
 
 	/**
 	 * Display column data for terms and users on 'to' side.
 	 *
+	 * @param  string $content   Content of the column.
 	 * @param  string $column    Column ID.
 	 * @param  int    $object_id Object ID.
 	 */
@@ -226,7 +228,7 @@ class MBR_Admin_Columns {
 
 		$object = $this->object_factory->build( $object_type );
 		$items  = array_map(
-			function( $item ) use ( $object, $config ) {
+			function ( $item ) use ( $object, $config ) {
 				return $object->render_admin( $item, $config );
 			},
 			$items
